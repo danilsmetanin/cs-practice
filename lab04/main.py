@@ -4,6 +4,7 @@ from stats import average_by_city, read_valid, warmest_city
 lines = sys.stdin.read().splitlines()
 
 records = read_valid(lines)
+
 total = 0
 for line in lines:
     if line.strip() != "":
