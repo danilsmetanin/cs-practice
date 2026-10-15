@@ -2,7 +2,14 @@ import sys
 from stats import average_by_city, read_valid, warmest_city
 
 lines = sys.stdin.read().splitlines()
-records, skipped = read_valid(lines)
+
+records = read_valid(lines)
+total = 0
+for line in lines:
+    if line.strip() != "":
+        total += 1
+skipped = total - len(records)
+
 avg = average_by_city(records)
 best = warmest_city(records)
 
