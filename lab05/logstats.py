@@ -2,11 +2,11 @@ LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR"]
 
 
 def parse_event(line):
-    parts = line.split(" ", 2)
+    parts = line.strip().split(" ", 2)
     if len(parts) != 3:
         raise ValueError("не три части")
-    time = parts[0].strip()
-    level = parts[1].strip()
+    time = parts[0]
+    level = parts[1]
     message = parts[2].strip()
     if time == "":
         raise ValueError("пустое время")
