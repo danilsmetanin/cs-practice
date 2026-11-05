@@ -73,3 +73,23 @@ def parse_settings(lines):
     return result
 
 
+def merge_by_key(rows, extra, key="id"):
+    result = []
+
+    for row in rows:
+        k = row.get(key)
+        add = extra.get(k, {})
+
+        new_row = {}
+        for a in add:
+            new_row[a] = add[a]
+        for a in row:
+            new_row[a] = row[a]
+
+        result.append(new_row)
+
+    return result
+
+
+def records_to_json(records):
+    return json.dumps(records, ensure_ascii=False, indent=2, sort_keys=True)
