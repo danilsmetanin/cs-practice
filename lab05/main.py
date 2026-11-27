@@ -1,35 +1,21 @@
-import sys
-from logstats import parse_event, count_levels, top_errors, format_report
+import os
 
-path = sys.stdin.readline().strip()
+from logstats import count_levels, format_report, top_errors
 
-total = 0
-errors = 0
-broken = 0
+filename = input().strip()
 
-with open(path, encoding="utf-8") as log:
-    for line in log:
-        if line.strip() == "":
-            continue
-        total += 1
-        try:
-            event = parse_event(line)
-            if event["level"] == "ERROR":
-                errors += 1
-        except ValueError:
-            broken += 1
-
-with open(path, encoding="utf-8") as log:
+with open(filename, encoding="utf-8") as log:
     counts = count_levels(log)
 
-with open(path, encoding="utf-8") as log:
-    top = top_errors(log, 3)
+with open(filename, encoding="utf-8") as log:
+    errors = top_errors(log, 3)
 
-report = format_report(counts, top)
+print(sum(counts.values()))
+print(counts.get("ERROR", 0))
+print(counts.get("BROKEN", 0))
 
-with open("report.txt", "w", encoding="utf-8") as f:
-    f.write(report)
+report = format_report(counts, errors)
+report_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "report.txt")
 
-print(total)
-print(errors)
-print(broken)
+with open(report_path, "w", encoding="utf-8", newline="\n") as file:
+    file.write(report)
