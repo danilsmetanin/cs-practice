@@ -14,3 +14,21 @@ def vector_report(values):
         "every_second": arr[::2].tolist(),
         "reversed": arr[::-1].tolist(),
     }
+
+
+def change_vector(values):
+    arr = np.asarray(values, dtype=float).copy()
+    arr[2:5] = 99
+    arr[::2] = -1
+    return arr.tolist()
+
+
+def cap_above(values, limit):
+    arr = np.asarray(values, dtype=float).copy()
+    arr[arr > limit] = limit
+    return arr.tolist()
+
+
+def celsius_to_fahrenheit(values):
+    arr = np.asarray(values, dtype=float)
+    return (arr * 9 / 5 + 32).tolist()
